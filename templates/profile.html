@@ -1,0 +1,32 @@
+{% extends 'layout.html' %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+<h2>Perfil</h2>
+<div>
+    <p>Tus datos personales:</p>
+    <table>
+        <tr>
+            <td>Nombre y apellido:</td>
+            <td>{{ session['nombre'] }} {{ session['apellido'] }}</td>
+        </tr>
+        <tr>
+            <td>DNI:</td>
+            <td>{{ session['dni'] }}</td>
+        </tr>
+        <tr>
+            <td>Telefono:</td>
+            <td>{{ session['telefono'] }}</td>
+        </tr>
+        <tr>
+            <td>Email:</td>
+            <td>{{ session['email'] }}</td>
+        </tr>
+        <tr>
+            <td>Direccion:</td>
+            <td>{{ session['direccion'] }}</td>
+        </tr>
+    </table>
+</div>
+{% endblock %}

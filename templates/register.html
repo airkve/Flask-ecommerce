@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Register</title>
+		<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+	</head>
+	<body>
+		<div class="register">
+			<h1>Register</h1>
+			<div class="links">
+				<a href="{{ url_for('login') }}">Login</a>
+				<a href="{{ url_for('register') }}" class="active">Register</a>
+			</div>
+			<form action="{{ url_for('register') }}" method="post" autocomplete="off">
+                <!-- Nombre de usuario -->
+				<!-- <label for="username">
+					<i class="fas fa-user"></i>
+				</label>
+                <input type="text" name="username" placeholder="Alias" id="username" required> -->
+                <!-- Nombre -->
+                <label for="nombre">
+                    <i class="fas fa-user"></i>
+                </label>
+                <input type="text" name="nombre" placeholder="Nombre" id="nombre" required>
+                <!-- Apellido -->
+                <label for="apellido">
+                    <i class="fas fa-user"></i>
+                </label>
+                <input type="text" name="apellido" placeholder="Apellido" id="apellido" required>
+                <!-- DNI -->
+                <label for="dni">
+                    <i class="fas fa-id-card"></i>
+                </label>
+                <input type="text" name="dni" placeholder="DNI" id="dni" required>
+                <!-- Clave -->
+				<label for="password">
+					<i class="fas fa-lock"></i>
+				</label>
+                <input type="password" name="password" placeholder="Clave" id="password" required>
+                <!-- E-mail -->
+				<label for="email">
+					<i class="fas fa-envelope"></i>
+				</label>
+                <input type="email" name="email" placeholder="Email" id="email" required>
+                <!-- Telefono -->
+                <label for="telf">
+                    <i class="fas fa-phone"></i>
+                </label>
+				<input type="text" name="telf" placeholder="Teléfono" id="telf" required>
+				<!-- Direccion -->
+                <label for="direccion">
+					<i class="fas fa-map-marked-alt"></i>
+                </label>
+				<input type="text" name="direccion" placeholder="Dirección" id="direccion" required>
+				<!-- Ciudad -->
+				<label for="ciudad">
+					<i class="fas fa-city"></i>
+				</label>
+				<select name="ciudad" id="ciudad">
+					{% for ciudad in ciudades %}
+					<option value="{{ ciudad[0] }}">{{ ciudad[1] }}</option>
+					{% endfor %}
+				</select>
+                <!-- Mensajes -->
+				<div class="msg">{{ msg }}</div>
+				<input type="submit" value="Register">
+			</form>
+		</div>
+	</body>
+</html>

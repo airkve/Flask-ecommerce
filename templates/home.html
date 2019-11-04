@@ -1,0 +1,25 @@
+{% extends 'layout.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<h2>Home Page</h2>
+<p>Bienvenido, {{ username }}!</p>
+<h2>Historial de compras</h2>
+<table class="historial">
+    <tr>
+        <th>Fecha de compra</th>
+        <th>Producto</th>
+        <th>Cantidad</th>
+        <th>Precio</th>
+    </tr>
+    {% for compra in compras %}
+    <tr>
+        <td>{{ compra[1] }}</td>
+        <td>{{ compra[3] }}</td>
+        <td>{{ compra[4] }}</td>
+        <td>{{ compra[5] }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
