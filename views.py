@@ -127,7 +127,7 @@ def home():
     # redirecciona a la pagina de login, si no esta registrado
     return redirect(url_for('login'))
 
-# este codigo maneja la seccion de profile http://localhost:5000/pythonlogin/profile
+# define la ruta y funciones del perfil http://localhost:5000/pythonlogin/profile
 @app.route('/profile')
 def profile():
     # verifica si el usuario esta registrado
@@ -139,11 +139,23 @@ def profile():
     # redirecciona a la pantalla de login si no esta registrado
     return redirect(url_for('login'))
 
-@app.route('/catalogo')
+# define la ruta y funciones para el catalogo http://localhost:5000/pythonlogin/catalogo
+@app.route('/catalogo', method=['GET', 'POST'])
 def catalogo():
     # chequea si hay un usuario registrado
     if 'loggedin' in session:
-        catalogo = db.consultar_lista_productos()
-        return render_template('catalogo.html', productos=catalogo)
+        if request.method == 'POST':
+            compras = request.args.getlist('compra')
+            print(compras)
+        else:
+            catalogo = db.consultar_lista_productos()
+            return render_template('catalogo.html', productos=catalogo)
     # redirecciona a la pagina de login, si no esta registrado
     return redirect(url_for('login'))
+
+# define la ruta y funciones del carrito de compras http://localhost:5000/pythonlogin/carrito
+@app.route('/carrito')
+def carrito():
+    if 'loggedin' in session:
+        if request.method == 'POST':
+            pass
