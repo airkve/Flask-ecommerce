@@ -14,21 +14,22 @@
                     <th>Precio Total</th>
                     <th></th>
                 </tr>
+                <!-- {% for item in data %} -->
                 <tr class="cart-row gray" data-orderlineid="02e9151d-24b4-46ca-8e9f-a4d000adbd83">
                     <td class="product-info" width="45%">
                         <div class="wrap">
                             <div class="small-4 columns item-thumb">
-                                <a href=""><img src="" alt="95T Achieve Treadmill"></a>
+                                <a href=""><img src="" alt="{{ item[1] }}"></a>
                             </div>
                             <div class="small-8 columns description">
                                 <div class="item-name">
-                                    <a href="">95T Achieve Treadmill</a>
+                                    <a href="">{{ item[1] }}</a>
                                 </div>
                                 <div class="item-num">
-                                    <span class="item-num-sku">Product Code: 456009801</span>
+                                    <span class="item-num-sku">Product Code: {{ item[0] }}</span>
                                 </div>
                                 <div class="availability">
-                                    <span class="instock">In Stock</span>
+                                    <span class="instock">En existencia</span>
                                 </div>
                             </div>
                         </div>
@@ -36,7 +37,7 @@
                     <td class="quantity">
                         <div class="wrap">
                             <div class="item-qty">
-                                <input type="text" id="02e9151d-24b4-46ca-8e9f-a4d000adbd83_qty" data-qty-input="" value="3" class="numerictextbox qty txt">
+                                <input type="text" id="02e9151d-24b4-46ca-8e9f-a4d000adbd83_qty" data-qty-input="" value="1" class="numerictextbox qty txt">
                             </div>
                             <div class="update">
                                 <a class="update-btn" id="02e9151d-24b4-46ca-8e9f-a4d000adbd83_update" onclick="">Update</a>
@@ -46,7 +47,9 @@
                     <td class="price">
                         <div class="wrap">
                             <div class="price">
-                                <span class="price">$3,599.00</span>
+                                <span class="price">
+                                    {{ item[2] }}
+                                </span>
                             </div>
                         </div>
                     </td>
@@ -54,7 +57,7 @@
                         <div class="wrap">
                             <div class="price">
                                 <div class="item-subtotal">
-                                    $10,797.00
+                                    {{ item[2] * item[3] }}
                                 </div>
                             </div>
                         </div>
@@ -69,6 +72,7 @@
                         </div>
                     </td>
                 </tr>
+                <!-- {% endfor %} -->
             </tbody>
         </table>
     </div>

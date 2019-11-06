@@ -16,5 +16,6 @@ app.secret_key = os.urandom(24)
 conexion = mysql.connector.connect(**dbconf)
 
 
+
 # carga las vistas
 from views import *

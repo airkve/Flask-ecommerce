@@ -8,7 +8,7 @@ class Database():
         
     def crear_usuario(self, user):
         """ Crea un usuario en la DB usando:
-        dni, nombre, apellido, email y clave. """
+        dni, item, apellido, email y clave. """
 
         try:
             self.cursor.execute(queries['add_user'], user)
@@ -108,7 +108,7 @@ class Database():
 
         item = [
             self.producto.get_id(),
-            self.producto.get_nombre(),
+            self.producto.get_item(),
             self.producto.get_descriptcion(),
             self.producto.get_marca(),
             self.producto.get_categoria(),
@@ -192,3 +192,23 @@ class Database():
             # guarda la consulta en una variable
             consulta = self.cursor.fetchall()
             return consulta
+
+    def crear_carrito(self):
+        """ Busca los producotos en la DB y formatea el carrito. """
+
+        try:
+            self.cursor.execute(queries['get_products'])
+        except Error as e:
+            print('Ocurrió un error al hacer la consulta.', e)
+        else:
+            # guarda la consulta en una variable
+            consulta = self.cursor.fetchall()
+            result = {}
+            for item in consulta:
+                result[item[0]] = {
+                    'nombre': item[1],
+                    'descripcion': item[2],
+                    'precio': item[3],
+                    'cantidad': 0
+                }
+            return result

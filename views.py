@@ -3,10 +3,12 @@ from models import Database
 
 # instancia la base de datos
 db = Database()
+
 # redirecciona hacia el login
 @app.route('/')
 def index():
     return redirect(url_for('login'))
+
 # controlador de login http://localhost:5000/pythonlogin/
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -38,6 +40,8 @@ def login():
             session['telefono'] = account[6]
             session['direccion'] = account[7]
             session['ciudad'] = account[8]
+            session['carrito'] = db.crear_carrito()
+            print(session['carrito'])
             # redirecciona a la pagina de inicio
             return redirect(url_for('home'))
         else:
@@ -140,16 +144,14 @@ def profile():
     return redirect(url_for('login'))
 
 # define la ruta y funciones para el catalogo http://localhost:5000/pythonlogin/catalogo
-@app.route('/catalogo', method=['GET', 'POST'])
+@app.route('/catalogo')
 def catalogo():
     # chequea si hay un usuario registrado
     if 'loggedin' in session:
-        if request.method == 'POST':
-            compras = request.args.getlist('compra')
-            print(compras)
-        else:
-            catalogo = db.consultar_lista_productos()
-            return render_template('catalogo.html', productos=catalogo)
+        #item = request.args.get('item')
+        #session['carrito'] = item
+        catalogo = db.consultar_lista_productos()
+        return render_template('catalogo.html', productos=catalogo)
     # redirecciona a la pagina de login, si no esta registrado
     return redirect(url_for('login'))
 
@@ -157,5 +159,11 @@ def catalogo():
 @app.route('/carrito')
 def carrito():
     if 'loggedin' in session:
-        if request.method == 'POST':
-            pass
+        cart = []
+        producto_id = request.args.get('item')
+        if 'carrito' in session:
+            session['carrito'][producto_id]['cantidad'] += 1
+        for x, y in session.items():
+            if y['cantidad'] > 0:
+                cart.append(x)
+        return render_template('carrito.html', productos=cart)

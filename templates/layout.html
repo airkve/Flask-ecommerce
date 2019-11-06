@@ -10,8 +10,9 @@
 		<nav class="navtop">
 			<div>
 				<h1>Mercado Precio</h1>
+				<a href="{{ url_for('home') }}"><i class="fas fa-home"></i></i>Catalogo</a>
 				<a href="{{ url_for('catalogo') }}"><i class="fas fa-store"></i></i>Catalogo</a>
-                <a href="{{ url_for('home') }}"><i class="fas fa-shopping-cart"></i>Carrito de compras</a>
+                <a href="{{ url_for('carrito') }}"><i class="fas fa-shopping-cart"></i>Carrito de compras</a>
 				<a href="{{ url_for('profile') }}"><i class="fas fa-user-circle"></i>Perfil</a>
 				<a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i>Salir</a>
 			</div>
