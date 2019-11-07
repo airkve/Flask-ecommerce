@@ -1,5 +1,4 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
-from flask_bootstrap import Bootstrap
 import mysql.connector
 from dbdata import dbconf, queries
 from mysql.connector import Error
