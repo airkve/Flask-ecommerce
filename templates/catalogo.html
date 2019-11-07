@@ -6,8 +6,7 @@
 <h2>Catálogo de compras</h2>
 
 
-{% for producto in productos %}
-<div class="card">
+<!-- <div class="card">
     <img src="jeans3.jpg" alt="{{ producto[1] }}" style="width:100%">
     <h1>{{ producto[1] }}</h1>
     <p class="price">{{ producto[3] }}</p>
@@ -15,12 +14,61 @@
     <p><input type="number" min="1" max="999" step="1" value="1" size=3 ></p>
     <p><button>Add to Cart</button></p>
     <a href="{{ url_for('carrito', item=producto[0]) }}">Seleccionar</a>
-</div>
-<!-- <div class="card">
-    <h3>{{ producto[1] }}</h3>
-    <p>{{ producto[2] }}</p>
-    <p>{{ producto[3] }}</p>
-    <a href="{{ url_for('catalogo') }}">Seleccionar</a>
 </div> -->
-{% endfor %}
+<div class="container">
+    <div class="col-xs-12 col-md-6">
+        <!-- First product box start here-->
+        {% for producto in productos %}
+        <div class="prod-info-main prod-wrap clearfix">
+            <div class="row">
+                    <div class="col-md-5 col-sm-12 col-xs-12">
+                        <div class="product-image"> 
+                            <img src="images/p4.png" class="img-responsive"> 
+                            <span class="tag2 hot">
+                                HOT
+                            </span> 
+                        </div>
+                    </div>
+                    <div class="col-md-7 col-sm-12 col-xs-12">
+                    <div class="product-deatil">
+                            <h5 class="name">
+                                <a href="#">
+                                    {{ producto[1] }}
+                                </a>
+                                <a href="#">
+                                    <span>{{ producto[4] }}</span>
+                                </a>                            
+    
+                            </h5>
+                            <p class="price-container">
+                                <span>{{ producto[3] }}</span>
+                            </p>
+                            <span class="tag1"></span> 
+                    </div>
+                    <div class="description">
+                        <p>{{ producto[2] }}</p>
+                    </div>
+                    <div class="product-info smart-form">
+                        <div class="row">
+                            <div class="col-md-12"> 
+                                <a href="javascript:void(0);" class="btn btn-danger">Add to cart</a>
+                                <a href="javascript:void(0);" class="btn btn-info">More info</a>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="rating">Rating:
+                                    <label for="stars-rating-5"><i class="fa fa-star text-danger"></i></label>
+                                    <label for="stars-rating-4"><i class="fa fa-star text-danger"></i></label>
+                                    <label for="stars-rating-3"><i class="fa fa-star text-danger"></i></label>
+                                    <label for="stars-rating-2"><i class="fa fa-star text-warning"></i></label>
+                                    <label for="stars-rating-1"><i class="fa fa-star text-warning"></i></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}

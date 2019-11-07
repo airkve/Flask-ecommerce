@@ -42,6 +42,7 @@ def login():
             session['ciudad'] = account[8]
             session['carrito'] = db.crear_carrito()
             print(session['carrito'])
+            print(session['carrito'])
             # redirecciona a la pagina de inicio
             return redirect(url_for('home'))
         else:
@@ -162,7 +163,7 @@ def carrito():
         cart = []
         producto_id = request.args.get('item')
         if 'carrito' in session:
-            session['carrito'][producto_id]['cantidad'] += 1
+            session['carrito'][int(producto_id)]['cantidad'] += 1
         for x, y in session.items():
             if y['cantidad'] > 0:
                 cart.append(x)
