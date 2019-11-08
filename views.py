@@ -40,6 +40,7 @@ def login():
             session['telefono'] = account[6]
             session['direccion'] = account[7]
             session['ciudad'] = account[8]
+            session['fecha'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
             # redirecciona a la pagina de inicio
             return redirect(url_for('home'))
         else:
@@ -61,6 +62,7 @@ def logout():
     session.pop('email', None)
     session.pop('direccion', None)
     session.pop('ciudad', None)
+    carrito_de_compras = None
     # redirecciona a la pagina de login
     return redirect(url_for('login'))
 
@@ -146,39 +148,41 @@ def profile():
 def catalogo():
     # chequea si hay un usuario registrado
     if 'loggedin' in session:
-        item = request.args.get('item')
-        if item:
-            if item in carrito_de_compras:
-                carrito_de_compras[str(item)] += 1
-            else:
-                carrito_de_compras[str(item)] = 1
         catalogo = db.consultar_lista_productos()
         return render_template('catalogo.html', productos=catalogo)
     # redirecciona a la pagina de login, si no esta registrado
     return redirect(url_for('login'))
 
 # define la ruta y funciones del carrito de compras http://localhost:5000/pythonlogin/carrito
-@app.route('/carrito')
+@app.route('/carrito', methods=['GET', 'POST'])
 def carrito():
     if 'loggedin' in session:
-        # cart = {}
-        # item = request.args.get('item')
-        # cart[item] = 1
-        # if 'carrito' in session:
-        #     session['carrito'][int(producto_id)]['cantidad'] += 1
-        # for x, y in session.items():
-        #     if y['cantidad'] > 0:
-        #         cart.append(x)
+        # item = request.form['product']
+        # cantidad = request.form['cantidad']
+        # item_in_db = db.consultar_producto_por_nombre(item)
+        # compra = ()
         return render_template('carrito.html', carrito=carrito_de_compras)
 
-@app.route('/eliminar')
-def eliminar():
-    try:
-        data = request.args.get('cart')
+# ruta que elimina los productos de carrito de compras
+@app.route('/agregar/<data>')
+def agregar(data):
+    # chequea si hay un usuario registrado
+    if 'loggedin' in session:
+        if data in carrito_de_compras:
+            carrito_de_compras[str(data)] += 1
+        else:
+            carrito_de_compras[str(data)] = 1
+        return redirect(url_for('catalogo'))
+    # redirecciona a la pagina de login, si no esta registrado
+    return redirect(url_for('login'))
+
+# ruta que elimina los productos de carrito de compras
+@app.route('/eliminar/<data>')
+def eliminar(data):
+    # chequea si hay un usuario registrado
+    if 'loggedin' in session:
         if data in carrito_de_compras:
             carrito_de_compras[data] = 0
-            print(carrito_de_compras)
-    except Exception as e:
-        return(str(e))
-    else:
         return render_template('carrito.html', carrito=carrito_de_compras)
+    # redirecciona a la pagina de login, si no esta registrado
+    return redirect(url_for('login'))

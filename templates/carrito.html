@@ -18,7 +18,6 @@
 
         <thead>
             <tr>
-                <th>#</th>
                 <th>Producto</th>
                 <th>Cantidad</th>
                 <th>Accion</th>
@@ -28,12 +27,11 @@
         <tbody>
             {% for item, cant in carrito.items() %}
                 {% if cant > 0 %}
-                    <tr>
-                        <th scope="row">{{ loop.index }}</th>
-                        <td>{{ item }}</td>
-                        <td>{{ cant }}</td>
+                    <tr class="articulo">
+                        <th scope="row"><input type="text" name="product" class="flat" value="{{ item }}" readonly></th>
+                        <td><input type="number" name="cantidad" value="{{ cant }}"></td>
                         <td>
-                            <a href="{{ url_for('eliminar', item=item) }}" class="btn btn-danger btn-sm m-0">Eliminar</a>
+                            <a href="{{ url_for('eliminar', data=item) }}" class="btn btn-danger btn-sm m-0" id="elim">Eliminar</a>
                         </td>
                     </tr>
                 {% endif %}

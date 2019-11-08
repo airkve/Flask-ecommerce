@@ -188,3 +188,8 @@ margin-right: 15px;
 }
 }
 
+.flat {
+    background-color:transparent;
+    border:0px;
+    padding:0px;
+}

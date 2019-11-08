@@ -23,6 +23,7 @@ queries = {
     'get_address_by_user_id':'SELECT direcciones.id, direcciones.direccion, direcciones.altura, direcciones.codigo_postal, ciudades.nombre, provincias.nombre, paises.nombre FROM direcciones INNER JOIN ciudades ON ciudades.ciudad_id = direcciones.ciudad_id INNER JOIN provincias ON provincias.provincia_id = ciudades.provincia_id INNER JOIN paises ON paises.pais_id = provincias.pais_id WHERE direcciones.id = (SELECT usuarios.direccion_id FROM usuarios WHERE usuarios.direccion_id = %s)',
     'get_address_id':'SELECT direccion_id FROM usuarios WHERE dni = %s',
     'get_product_by_id':'SELECT productos.producto_id, productos.nombre, productos.descripcion, productos.precio, categorias.nombre, marcas.nombre, productos.cantidad FROM productos INNER JOIN categorias ON categorias.categoria_id = productos.categoria_id INNER JOIN marcas ON marcas.marca_id = productos.marca_id WHERE producto_id = %s',
+    'get_product_by_name':'SELECT productos.producto_id FROM productos WHERE productos.nombre = %s',
     'get_products':'SELECT productos.producto_id, productos.nombre, productos.descripcion, productos.precio, categorias.nombre, marcas.nombre, productos.cantidad FROM productos INNER JOIN categorias ON categorias.categoria_id = productos.categoria_id INNER JOIN marcas ON marcas.marca_id = productos.marca_id',
     'add_product':'INSERT INTO productos (nombre, descripcion, marca, categoria, precio) VALUES (%s, %s, %s, %s, %s)',
     'mod_product_cant':'UPDATE productos set cantidad = %s where producto_id = %s',

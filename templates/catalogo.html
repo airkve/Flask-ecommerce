@@ -20,7 +20,7 @@
         <!-- First product box start here-->
         {% for producto in productos %}
         <div class="prod-info-main prod-wrap clearfix">
-            <div class="row">
+            <div class="row border-1">
                     <div class="col-md-5 col-sm-12 col-xs-12">
                         <div class="product-image"> 
                             <img src="static/images/Galaxy s10.jpg" class="img-responsive"> 
@@ -51,7 +51,7 @@
                     <div class="product-info smart-form">
                         <div class="row">
                             <div class="col-md-12"> 
-                                <a href="{{ url_for('catalogo', item=producto[1]) }}" class="btn btn-danger" id="add-to-car">Agregar</a>
+                                <a href="{{ url_for('agregar', data=producto[1]) }}" class="btn btn-danger" id="add-to-car">Agregar</a>
                             </div>
                             
                         </div>

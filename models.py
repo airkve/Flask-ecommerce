@@ -159,7 +159,8 @@ class Database():
             return consulta
 
     def crear_compra(self, shop_data):
-        """ Registra las compras del cliente en la DB. """
+        """ Registra las compras del cliente en la DB con:
+            usuario_id, fecha, producto_id, cantidad y precioT. """
 
         try:
             self.cursor.execute(queries['new_shopping'], shop_data)
@@ -170,7 +171,7 @@ class Database():
             self.conexion.commit()
 
     def consultar_compras(self, cliente):
-        """ Busca el historial de compras del usuario en ls DB. """
+        """ Busca el historial de compras en la DB con el email del usuario. """
 
         try:
             self.cursor.execute(queries['get_user_shop_history'], (cliente,))
@@ -193,22 +194,14 @@ class Database():
             consulta = self.cursor.fetchall()
             return consulta
 
-    def crear_carrito(self):
-        """ Busca los producotos en la DB y formatea el carrito. """
+    def consultar_producto_por_nombre(self):
+        """ Busca producto en la DB por su nombre. """
 
         try:
-            self.cursor.execute(queries['get_products'])
+            self.cursor.execute(queries['get_product_by_name'])
         except Error as e:
             print('Ocurrió un error al hacer la consulta.', e)
         else:
             # guarda la consulta en una variable
             consulta = self.cursor.fetchall()
-            result = {}
-            for item in consulta:
-                result[item[0]] = {
-                    'nombre': item[1],
-                    'descripcion': item[2],
-                    'precio': item[3],
-                    'cantidad': 0
-                }
-            return result
+            return consulta
