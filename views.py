@@ -40,9 +40,6 @@ def login():
             session['telefono'] = account[6]
             session['direccion'] = account[7]
             session['ciudad'] = account[8]
-            session['carrito'] = db.crear_carrito()
-            print(session['carrito'])
-            print(session['carrito'])
             # redirecciona a la pagina de inicio
             return redirect(url_for('home'))
         else:
@@ -149,8 +146,12 @@ def profile():
 def catalogo():
     # chequea si hay un usuario registrado
     if 'loggedin' in session:
-        #item = request.args.get('item')
-        #session['carrito'] = item
+        item = request.args.get('item')
+        if item:
+            if item in carrito_de_compras:
+                carrito_de_compras[str(item)] += 1
+            else:
+                carrito_de_compras[str(item)] = 1
         catalogo = db.consultar_lista_productos()
         return render_template('catalogo.html', productos=catalogo)
     # redirecciona a la pagina de login, si no esta registrado
@@ -160,11 +161,24 @@ def catalogo():
 @app.route('/carrito')
 def carrito():
     if 'loggedin' in session:
-        cart = []
-        producto_id = request.args.get('item')
-        if 'carrito' in session:
-            session['carrito'][int(producto_id)]['cantidad'] += 1
-        for x, y in session.items():
-            if y['cantidad'] > 0:
-                cart.append(x)
-        return render_template('carrito.html', productos=cart)
+        # cart = {}
+        # item = request.args.get('item')
+        # cart[item] = 1
+        # if 'carrito' in session:
+        #     session['carrito'][int(producto_id)]['cantidad'] += 1
+        # for x, y in session.items():
+        #     if y['cantidad'] > 0:
+        #         cart.append(x)
+        return render_template('carrito.html', carrito=carrito_de_compras)
+
+@app.route('/eliminar')
+def eliminar():
+    try:
+        data = request.args.get('cart')
+        if data in carrito_de_compras:
+            carrito_de_compras[data] = 0
+            print(carrito_de_compras)
+    except Exception as e:
+        return(str(e))
+    else:
+        return render_template('carrito.html', carrito=carrito_de_compras)

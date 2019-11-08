@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session, flash
+from flask import Flask, render_template, request, redirect, url_for, session, flash, jsonify
 import mysql.connector
 from dbdata import dbconf, queries
 from mysql.connector import Error
@@ -14,8 +14,7 @@ app.secret_key = os.urandom(24)
 
 # Coneccion a la base de datos
 conexion = mysql.connector.connect(**dbconf)
-
-
+carrito_de_compras = {}
 
 # carga las vistas
 from views import *
