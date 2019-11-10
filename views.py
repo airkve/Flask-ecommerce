@@ -41,6 +41,7 @@ def login():
             session['direccion'] = account[7]
             session['ciudad'] = account[8]
             session['fecha'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            session['compras'] = {}
             # redirecciona a la pagina de inicio
             return redirect(url_for('home'))
         else:
@@ -53,16 +54,7 @@ def login():
 @app.route('/logout')
 def logout():
     # elimina los datos que se registraron de la session
-    session.pop('loggedin', None)
-    session.pop('id', None)
-    session.pop('nombre', None)
-    session.pop('apellido', None)
-    session.pop('dni', None)
-    session.pop('telf', None)
-    session.pop('email', None)
-    session.pop('direccion', None)
-    session.pop('ciudad', None)
-    carrito_de_compras = None
+    session.clear()
     # redirecciona a la pagina de login
     return redirect(url_for('login'))
 
@@ -161,17 +153,38 @@ def carrito():
         # cantidad = request.form['cantidad']
         # item_in_db = db.consultar_producto_por_nombre(item)
         # compra = ()
-        return render_template('carrito.html', carrito=carrito_de_compras)
+        return render_template('carrito.html')
 
 # ruta que elimina los productos de carrito de compras
 @app.route('/agregar/<data>')
 def agregar(data):
     # chequea si hay un usuario registrado
     if 'loggedin' in session:
-        if data in carrito_de_compras:
-            carrito_de_compras[str(data)] += 1
+        item = db.consultar_producto_id(data)
+        if 'compras' in session:
+            compras = session['compras']
+            if data in compras:
+                cant = compras[data]['cantidad'] + 1
+                compras[data] = {
+                    'nombre': item[1],
+                    'cantidad': cant,
+                    'p_total': item[3] * cant
+                }
+            else:
+                compras[data] = {
+                    'nombre': item[1],
+                    'cantidad': 1,
+                    'p_total': item[3]
+                }
+            session['compras'] = compras
+
         else:
-            carrito_de_compras[str(data)] = 1
+            print('La sesión de cuentas no está creada')
+        # cantidad = carrito_de_compras[item[1]]
+        # compras = session['compras']
+        # compras.append((session['id'], session['fecha'], int(data), cantidad, item[3] * cantidad))
+        # session['compras'] = compras
+        print(session['compras'])
         return redirect(url_for('catalogo'))
     # redirecciona a la pagina de login, si no esta registrado
     return redirect(url_for('login'))
@@ -181,8 +194,25 @@ def agregar(data):
 def eliminar(data):
     # chequea si hay un usuario registrado
     if 'loggedin' in session:
-        if data in carrito_de_compras:
-            carrito_de_compras[data] = 0
-        return render_template('carrito.html', carrito=carrito_de_compras)
+        compras = session['compras']
+        if data in compras:
+            compras[data]['cantidad'] = 0
+        session['compras'] = compras
+        return render_template('carrito.html')
+    # redirecciona a la pagina de login, si no esta registrado
+    return redirect(url_for('login'))
+
+# ruta que finiquita la compra
+@app.route('/comprar')
+def comprar():
+    # chequea si hay un usuario registrado
+    if 'loggedin' in session:
+        for item_id, data in session['compras'].items():
+            compra = (session['id'], session['fecha'], int(item_id), data['cantidad'], data['p_total'])
+            db.crear_compra(compra)
+            tmp = (data['cantidad'], int(item_id))
+            db.modificar_producto_cantidad(tmp)
+            session['compras'] = {}
+        return redirect(url_for('home'))
     # redirecciona a la pagina de login, si no esta registrado
     return redirect(url_for('login'))

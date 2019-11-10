@@ -33,7 +33,7 @@ class Database():
                 print('No existe alguien con ese codigo de usuario.', e)
             else:
                 # registra los cambios a la base de datos
-                self.conexion.commit()
+                conexion.commit()
                 print('Usuario eliminado.')
         else:
             print('No existe un usuario con ese DNI.')
@@ -101,7 +101,7 @@ class Database():
             print('No existe un producto con ese ID.')
         else:
             # registra los cambios a la base de datos
-            self.conexion.commit()
+            conexion.commit()
 
     def cargar_producto(self, producto):
         """ Crea un producto nuevo en la DB. """
@@ -122,18 +122,21 @@ class Database():
             print('No existe producto con ese ID.')
         else:
             # registra los cambios a la base de datos
-            self.conexion.commit()
+            conexion.commit()
     
     def modificar_producto_cantidad(self, data):
         """ Modifica la cantidad de un producto en la DB. """
 
         try:
+            amount = self.cursor.execute(queries['get_product_cant_by_id'], (data[1],))
+            print(amount, data[0], data[1])
+            cant = (int((amount - data[0])), data[1])
             self.cursor.execute(queries['mod_product_cant'], data)
         except Error as e:
             print('Ocurrió un problema al tratar de ejecutar la operación.', e)
         else:
             # registra los cambios a la base de datos
-            self.conexion.commit()
+            conexion.commit()
             #print('Cambio exitoso {}.'.format(producto))
 
     def consultar_producto_id(self, producto):
@@ -168,7 +171,7 @@ class Database():
             print("Error al guardar los datos de la compra.", e)
         else:
             #guarda la consulta en una variable
-            self.conexion.commit()
+            conexion.commit()
 
     def consultar_compras(self, cliente):
         """ Busca el historial de compras en la DB con el email del usuario. """
@@ -194,14 +197,18 @@ class Database():
             consulta = self.cursor.fetchall()
             return consulta
 
-    def consultar_producto_por_nombre(self):
+    def consultar_producto_por_nombre(self, nombre):
         """ Busca producto en la DB por su nombre. """
 
         try:
-            self.cursor.execute(queries['get_product_by_name'])
+            self.cursor.execute(queries['get_product_by_name'], (nombre,))
         except Error as e:
             print('Ocurrió un error al hacer la consulta.', e)
         else:
             # guarda la consulta en una variable
             consulta = self.cursor.fetchall()
             return consulta
+
+
+db = Database()
+db.modificar_producto_cantidad(1, 11)

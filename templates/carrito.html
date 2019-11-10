@@ -20,18 +20,20 @@
             <tr>
                 <th>Producto</th>
                 <th>Cantidad</th>
+                <th>Precio</th>
                 <th>Accion</th>
             </tr>
         </thead>
         
         <tbody>
-            {% for item, cant in carrito.items() %}
-                {% if cant > 0 %}
+            {% for item_id, data in session['compras'].items() %}
+                {% if data.cantidad > 0 %}
                     <tr class="articulo">
-                        <th scope="row"><input type="text" name="product" class="flat" value="{{ item }}" readonly></th>
-                        <td><input type="number" name="cantidad" value="{{ cant }}"></td>
+                        <th scope="row">{{ data.nombre }}</th>
+                        <td><input type="number" name="cantidad" value="{{ data.cantidad }}" }}></td>
+                        <td>{{ data.p_total }}</td>
                         <td>
-                            <a href="{{ url_for('eliminar', data=item) }}" class="btn btn-danger btn-sm m-0" id="elim">Eliminar</a>
+                            <a href="{{ url_for('eliminar', data=item_id) }}" class="btn btn-danger btn-sm m-0" id="elim">Eliminar</a>
                         </td>
                     </tr>
                 {% endif %}
@@ -39,7 +41,7 @@
             {% endfor %}
         </tbody>
     </table>
-    <button type="button" class="btn btn-primary">Comprar</button>
+    <a href="{{ url_for('comprar') }}" class="btn btn-primary">Comprar</a>
 </form>
 
 {% endblock %}
