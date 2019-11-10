@@ -207,11 +207,12 @@ def eliminar(data):
 def comprar():
     # chequea si hay un usuario registrado
     if 'loggedin' in session:
+        # recorre las compras en session
         for item_id, data in session['compras'].items():
             compra = (session['id'], session['fecha'], int(item_id), data['cantidad'], data['p_total'])
             db.crear_compra(compra)
-            tmp = (data['cantidad'], int(item_id))
-            db.modificar_producto_cantidad(tmp)
+            upd_inv = (data['cantidad'], int(item_id))
+            db.modificar_producto_cantidad(upd_inv)
             session['compras'] = {}
         return redirect(url_for('home'))
     # redirecciona a la pagina de login, si no esta registrado

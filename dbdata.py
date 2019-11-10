@@ -27,7 +27,7 @@ queries = {
     'get_product_cant_by_id':'SELECT productos.cantidad FROM productos WHERE productos.producto_id = %s',
     'get_products':'SELECT productos.producto_id, productos.nombre, productos.descripcion, productos.precio, categorias.nombre, marcas.nombre, productos.cantidad FROM productos INNER JOIN categorias ON categorias.categoria_id = productos.categoria_id INNER JOIN marcas ON marcas.marca_id = productos.marca_id',
     'add_product':'INSERT INTO productos (nombre, descripcion, marca, categoria, precio) VALUES (%s, %s, %s, %s, %s)',
-    'mod_product_cant':'UPDATE productos set cantidad = %s where producto_id = %s',
+    'mod_product_cant':'UPDATE productos set cantidad = cantidad - %s where producto_id = %s',
     'del_product':'DELETE FROM productos WHERE producto_id = %s',
     'new_shopping':'INSERT INTO compras (usuario_id, fecha_compra, producto_id, cantidad, precio_total) VALUES (%s, %s, %s, %s, %s)',
     'ciudades':'SELECT ciudad_id, nombre FROM ciudades'

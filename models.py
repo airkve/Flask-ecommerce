@@ -106,15 +106,6 @@ class Database():
     def cargar_producto(self, producto):
         """ Crea un producto nuevo en la DB. """
 
-        item = [
-            self.producto.get_id(),
-            self.producto.get_item(),
-            self.producto.get_descriptcion(),
-            self.producto.get_marca(),
-            self.producto.get_categoria(),
-            self.producto.get_precio(),
-            self.producto.get_cantidad()
-        ]
         # inserta un producto en la base de datos
         try:
             self.cursor.execute(queries['add_product'], producto)
@@ -128,9 +119,6 @@ class Database():
         """ Modifica la cantidad de un producto en la DB. """
 
         try:
-            amount = self.cursor.execute(queries['get_product_cant_by_id'], (data[1],))
-            print(amount, data[0], data[1])
-            cant = (int((amount - data[0])), data[1])
             self.cursor.execute(queries['mod_product_cant'], data)
         except Error as e:
             print('Ocurrió un problema al tratar de ejecutar la operación.', e)
@@ -208,7 +196,3 @@ class Database():
             # guarda la consulta en una variable
             consulta = self.cursor.fetchall()
             return consulta
-
-
-db = Database()
-db.modificar_producto_cantidad(1, 11)
