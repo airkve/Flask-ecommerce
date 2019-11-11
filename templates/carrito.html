@@ -12,16 +12,17 @@
     });
 
 </script>
-<h2>Carrito de compras</h2>
-<form name="ShoppingList", action="{{ url_for('carrito') }}" method="POST">
-    <table class="table table-striped table-responsive-md btn-table">
+<div class="container bg-light">
+    
+    <h2>Carrito de compras</h2>
+    <table class="table">
 
-        <thead>
+        <thead class="thead-dark">
             <tr>
-                <th>Producto</th>
-                <th>Cantidad</th>
-                <th>Precio</th>
-                <th>Accion</th>
+                <th scope="col">Producto</th>
+                <th scope="col">Cantidad</th>
+                <th scope="col">Precio</th>
+                <th scope="col">Accion</th>
             </tr>
         </thead>
         
@@ -42,6 +43,6 @@
         </tbody>
     </table>
     <a href="{{ url_for('comprar') }}" class="btn btn-primary">Comprar</a>
-</form>
+</div>
 
 {% endblock %}

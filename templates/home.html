@@ -3,27 +3,30 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-<h2>Home Page</h2>
-<p>Bienvenido, {{ username }}!</p>
-<h2>Historial de compras</h2>
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col">Fecha de compra</th>
-            <th scope="col">Producto</th>
-            <th scope="col">Cantidad</th>
-            <th scope="col">Precio</th>
-        </tr>
-    </thead>
-    <tbody>
-    {% for compra in compras %}
-        <tr>
-            <th scope="row">{{ compra[1] }}</th>
-            <td>{{ compra[3] }}</td>
-            <td>{{ compra[4] }}</td>
-            <td>{{ compra[5] }}</td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
+<div class="container bg-light">
+    
+    <h2 class="text-center">Bienvenido, {{ username }}!</h2>
+    <p>Historial de compras</p>
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Fecha de compra</th>
+                <th scope="col">Producto</th>
+                <th scope="col">Cantidad</th>
+                <th scope="col">Precio</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for compra in compras %}
+            <tr>
+                <th scope="row">{{ compra[1] }}</th>
+                <td>{{ compra[3] }}</td>
+                <td>{{ compra[4] }}</td>
+                <td>{{ compra[5] }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
 {% endblock %}

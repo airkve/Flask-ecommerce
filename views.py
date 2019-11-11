@@ -20,7 +20,6 @@ def login():
         email = request.form['email']
         password = str(b64encode(request.form['password'].encode('utf-8')), 'utf-8')
         credenciales = (email, password)
-        print(password)
         # valida la cuenta contra la base de datos
         account = db.validar_usuario(credenciales)
         # cursor.execute('SELECT * FROM usuarios\
@@ -124,7 +123,7 @@ def home():
     return redirect(url_for('login'))
 
 # define la ruta y funciones del perfil http://localhost:5000/pythonlogin/profile
-@app.route('/profile')
+@app.route('/profile', methods=['GET', 'POST'])
 def profile():
     # verifica si el usuario esta registrado
     if 'loggedin' in session:
@@ -149,10 +148,6 @@ def catalogo():
 @app.route('/carrito', methods=['GET', 'POST'])
 def carrito():
     if 'loggedin' in session:
-        # item = request.form['product']
-        # cantidad = request.form['cantidad']
-        # item_in_db = db.consultar_producto_por_nombre(item)
-        # compra = ()
         return render_template('carrito.html')
 
 # ruta que elimina los productos de carrito de compras

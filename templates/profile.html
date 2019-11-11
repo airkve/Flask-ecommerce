@@ -6,27 +6,28 @@
 <h2>Perfil</h2>
 <div>
     <p>Tus datos personales:</p>
-    <table>
-        <tr>
-            <td>Nombre y apellido:</td>
-            <td>{{ session['nombre'] }} {{ session['apellido'] }}</td>
-        </tr>
-        <tr>
-            <td>DNI:</td>
-            <td>{{ session['dni'] }}</td>
-        </tr>
-        <tr>
-            <td>Telefono:</td>
-            <td>{{ session['telefono'] }}</td>
-        </tr>
-        <tr>
-            <td>Email:</td>
-            <td>{{ session['email'] }}</td>
-        </tr>
-        <tr>
-            <td>Direccion:</td>
-            <td>{{ session['direccion'] }}</td>
-        </tr>
-    </table>
+    <div class="container bg-light">
+        <form action="" method="POST">
+            <div class="form-group">
+            <label for="">Nombre y apellido:</label>
+            <input type="text" name="fullname" class="form-control-plaintext" value="{{ session['nombre'] }} {{ session['apellido'] }}">
+            </div>
+            <div class="form-group">
+            <label for="">DNI:</label>
+            <input type="text" name="dni" class="form-control-plaintext" value="{{ session['dni'] }}">
+            </div>
+            <div class="form-group">
+            <label for="">E-Mail:</label>
+            <input type="text" name="email" class="form-control" value="{{ session['email'] }}" aria-describedby="helpId">
+            <small id="helpId" class="text-muted">Ejemplo: nombre@mail.com</small>
+            </div>
+            <div class="form-group">
+            <label for="">Direccion:</label>
+            <input type="text" name="" id="" class="form-control" value="{{ session['direccion'] }}" aria-describedby="helpId">
+            <small id="helpId" class="text-muted">Especifica la direccion para el envío</small>
+            </div>
+            <button type="submit" class="btn btn-primary">Guardar</button>
+        </form>
+    </div>
 </div>
 {% endblock %}
