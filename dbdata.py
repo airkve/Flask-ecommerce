@@ -3,8 +3,8 @@
 dbconf = {
     'host':'localhost',
     'database':'ecommerce',
-    'user':'root',
-    'password':''
+    'user':'admindb',
+    'password':'1qazxsw2'
 }
 
 queries = {

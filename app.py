@@ -15,7 +15,6 @@ app.secret_key = os.urandom(24)
 
 # Coneccion a la base de datos
 conexion = mysql.connector.connect(**dbconf)
-carrito_de_compras = {}
 
 # carga las vistas
 from views import *

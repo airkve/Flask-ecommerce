@@ -155,6 +155,7 @@ def carrito():
 def agregar(data):
     # chequea si hay un usuario registrado
     if 'loggedin' in session:
+        # busca el producto en la base de datos
         item = db.consultar_producto_id(data)
         if 'compras' in session:
             compras = session['compras']
@@ -179,7 +180,6 @@ def agregar(data):
         # compras = session['compras']
         # compras.append((session['id'], session['fecha'], int(data), cantidad, item[3] * cantidad))
         # session['compras'] = compras
-        print(session['compras'])
         return redirect(url_for('catalogo'))
     # redirecciona a la pagina de login, si no esta registrado
     return redirect(url_for('login'))
