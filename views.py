@@ -127,6 +127,9 @@ def home():
 def profile():
     # verifica si el usuario esta registrado
     if 'loggedin' in session:
+        if request.method == 'POST':
+            email = request.form.get('email')
+            direccion = request.form.get('direccion')
         # muestra toda la info del usuario desde la base de datos
         cuenta = db.consultar_usuario_por_email(session['email'])
         # muestra los datos en la pagina de profile

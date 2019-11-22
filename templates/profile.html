@@ -5,9 +5,9 @@
 {% block content %}
 <h2>Perfil</h2>
 <div>
-    <p>Tus datos personales:</p>
+    <h2 class="text-center">Datos personales:</h2>
     <div class="container bg-light">
-        <form action="" method="POST">
+        <form action="{{ url_for('profile') }}" method="POST">
             <div class="form-group">
             <label for="">Nombre y apellido:</label>
             <input type="text" name="fullname" class="form-control-plaintext" value="{{ session['nombre'] }} {{ session['apellido'] }}">
